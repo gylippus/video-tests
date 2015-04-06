@@ -28,8 +28,13 @@ public class Html5Video extends CordovaPlugin {
 				for (int i = 0; i < tagNames.length(); i++) {
 					String[] video = videos.getString(tagNames.getString(i)).split("\\.");
 					int videoId = this.cordova.getActivity().getResources().getIdentifier(video[0], "videos", packageName);
-					xmlData = getIntent().getExtras();
-					convertedVideos.put("content://" + xmlData.getString("xapk_expansion_authority", "") + "/video/" + videoId);				
+					xmlData = this.cordova.getActivity().getIntent().getExtras();
+					
+					// int videoId = this.cordova.getActivity().getResources().getIdentifier(video[0], "raw", packageName);
+					// convertedVideos.put(tagNames.getString(i), "android.resource://" + packageName + "/" + videoId);
+					// LOG.d("Html5Video", "Id: " + tagNames.getString(i) + " , src: " + convertedVideos.getString(tagNames.getString(i)));
+					
+					convertedVideos.put(tagNames.getString(i), "content://" + xmlData.getString("xapk_expansion_authority", "") + "/video/" + videoId);				
 					LOG.d("Html5Video", "Id: " + tagNames.getString(i) + " , src: " + convertedVideos.getString(tagNames.getString(i)));
 				}
 				

@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
 	if (ionic.Platform.isAndroid()){
 		$timeout(function(){
 			window.plugins.html5Video.initialize({
-			      "video1" : "ankleOnKnee.mp4"
+			      "videoId" : "ankleonknee.mp4"
 			})
 	    }, 2000)
 
