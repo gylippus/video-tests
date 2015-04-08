@@ -1,14 +1,22 @@
 cordova-plugin-xapkreader (Agamemnus/Flyingsoft Games edition)
 ================================================================
 
-Purpose
---------
+Table of Contents
+------------------
+[Purpose](#purpose) <br/>
+[Donations?](#donations) <br/>
+[Tips](#tips) <br/>
+[Downloading and Initial Install](#downloading-and-Initial-Install) <br/>
+[Completing Installation](#completing-Installation) <br/>
+[Usage](#usage) <br/>
+[License](#license) <br/>
+
+#Purpose
 
 Google Play limits APK file sizes to 50 megabytes. Google implemented APK expansion files as the current solution. This plugin allows you to more easily implement APK expansion files in Cordova, automating most of the things.
 
 
-Donations
-----------
+#Donations
 
 Yes, I put this near the top, so you, dear reader, wouldn't miss it. Perhaps you'd like to donate some money to my gittip account? https://www.gittip.com/agamemnus/ I also have a Paypal account: agamemnus at flyingsoftgames dot com.
 
@@ -17,8 +25,7 @@ Or... maybe try my first game on Google Play, and perhaps buy some gems:
 https://play.google.com/store/apps/details?id=com.flyingsoft.safari.jigsaw.free
 
 
-Tips
------
+#Tips
 
 * You can test your expansion files by adding them to Android/obb/package.name/, as described here:  http://developer.android.com/google/play/expansion-files.html#Testing
 
@@ -37,8 +44,7 @@ Tips
 * Uninstalling the plugin will not remove the provider tag in AndroidManifest.xml, or any "config_munge" values in android.json.
 
 
-Downloading and Initial Install
----------------------------------
+#Downloading and Initial Install
 
 NOTICE: APK expansion files (e.g.: audio files), as of 10/10/2014, cannot be run in conjunction with the Cordova Media plugin. Please see [media_plugin_workaround.txt](https://github.com/agamemnus/cordova-plugin-xapkreader/blob/gh-pages/media_plugin_workaround.txt) for more details.
 
@@ -55,8 +61,7 @@ plugman install --platform android --project . --plugin https://github.com/agame
 ````
 
 
-Completing Installation
-------------------------
+#Completing Installation
 
  To complete installation:
  
@@ -72,10 +77,11 @@ Completing Installation
  android.library.reference.2=../../plugins/com.flyingsoftgames.xapkreader/android-sdk/extras/google/play_apk_expansion/downloader_library
  ````
  
+ 5) You must specify an [expansion authority URI](http://developer.android.com/guide/topics/manifest/provider-element.html#auth) (to reference files [see Usage](#usage), and to avoid conflicting provider problems) and your application's Google Play public license key. This information is stored in ``/plugins/android.json``, which then modifies ``/platform/android/res/values/xapkreader.xml``.
  
- 5) You must specify an expansion authority (to reference files [see Usage], and to avoid conflicting provider problems) and your application's Google Play public license key. This information is stored in ``/plugins/android.json``, which then modifies ``/platform/android/res/values/xapkreader.xml``.
- 
- 5a) In android.json, look for and modify ``com.sample.expansion`` and ``YOUR_GOOGLE_PLAY_LICENSE_KEY`` in this text:
+ 5b) (INFO) the expansion authority URI is a public resource accessible by any other Android program. You can specify what you want to name it. It **NOT** the project or package name! Make sure to make the expansion authority URI unique enough to avoid collisions. You may want to use a URI like "com.myprojectname.expansion" to make sure it is unique.
+
+ 5c) In android.json, look for and modify ``com.sample.expansion`` and ``YOUR_GOOGLE_PLAY_LICENSE_KEY`` in this text:
  ````
   "res/values/xapkreader.xml": {
                 "parents": {
@@ -90,9 +96,9 @@ Completing Installation
                         }
  ````
  
- 5b) If you deleted ``/platforms/android/ant-build`` and ``/platforms/android/ant-gen``, android.json will then append to the values in ``/platform/android/res/values/xapkreader.xml``:
+ 5d) If you deleted ``/platforms/android/ant-build`` and ``/platforms/android/ant-gen``, android.json will then append to the values in ``/platform/android/res/values/xapkreader.xml``:
 ````
- xapk_expansion_authority    : must be your content provider uri. (eg: com.sample.expansion)
+ xapk_expansion_authority    : the expansion authority URI for the content provider. (eg: com.sample.expansion)
  xapk_application_public_key : your application's Google Play public key.
  xapk_main_version           : your file's main version. OPTIONAL. Set to 0 to check the expansion directory for the first matched file starting with "main".
  xapk_patch_version          : your file's patch version. OPTIONAL. Set to 0 to check the expansion directory for the first matched file starting with "patch".
@@ -100,20 +106,18 @@ Completing Installation
  xapk_patch_file_size        : your patch version's file size. OPTIONAL. Set to 0 to skip the check.
 ````
 
-Usage
-------
+#Usage
 
- Access your files via the content provider. For example:
+ Access your files via the content provider's expansion authority URI. For example:
  
  ``<img src="content://com.sample.expansion/myfile.png">``
 
 
-License
----------
+#License (for any non-Android SDK parts...)
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Michael Romanovsky
+Copyright (c) 2014-2015 Michael Romanovsky
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
